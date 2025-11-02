@@ -25,82 +25,67 @@ The Histogram of gray scale image and color image is shown.
 
 
 ## Program:
-```
-# Developed By: R Anirudh 
+```python
+# Developed By: R Anirudh
 # Register Number: 212223230016
-```
 
-
-
-### Grayscale image and Color image
-```import cv2
-import matplotlib.pyplot as plt
-gray_image = cv2.imread("gray.jpeg")
-color_image = cv2.imread("dip.jpeg",-1)
-cv2.imshow("Gray Image",gray_image)
-cv2.imshow("Colour Image",color_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-```
-### Histogram of Grayscale image
-```import numpy as np
 import cv2
-Gray_image = cv2.imread("gray.jpeg")
-Color_image = cv2.imread("dip.jpeg")
+import numpy as np
 import matplotlib.pyplot as plt
-gray_hist = cv2.calcHist([Gray_image],[0],None,[256],[0,256])
-color_hist = cv2.calcHist([Color_image],[0],None,[256],[0,256])
-plt.figure()
-plt.imshow(Gray_image)
-plt.show()
-plt.title("Histogram")
-plt.xlabel("Grayscale Value")
-plt.ylabel("Pixel Count")
-plt.stem(gray_hist)
-plt.show()
-```
-### Histogram of Color image
-```
-plt.imshow(Color_image)
-plt.show()
-plt.title("Histogram of Color Image - Green Channel")
-plt.xlabel("Intensity Value")
-plt.ylabel("Pixel Count")
-plt.stem(color_hist)
-plt.show()
-cv2.waitKey(0)
-```
-### Histogram equalization of Grayscale image
-```
-import cv2
-gray_image = cv2.imread("dip.jpeg",0)
-cv2.imshow('Grey Scale Image',gray_image)
-equ = cv2.equalizeHist(gray_image)
-cv2.imshow("Equalized Image",equ)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-```
 
+img = cv2.imread('parrot.jpg',cv2.IMREAD_GRAYSCALE)
+
+plt.imshow(img, cmap='gray')
+plt.title("Original Image")
+plt.show()
+
+plt.hist(img.ravel(),256,range=[0,256])
+plt.title("Original Image")
+plt.show()
+
+
+img_eq=cv2.equalizeHist(img)
+
+plt.hist(img_eq.ravel(),256,range=[0,256]);
+plt.title('Equalized Histogram')
+
+plt.imshow(img_eq, cmap='gray')
+plt.title("Original Image")
+plt.show()
+
+
+img = cv2.imread('parrot.jpg',cv2.IMREAD_COLOR)
+img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+img_hsv[:,:,2] = cv2.equalizeHist(img_hsv[:,:,2])
+img_eq = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2BGR)
+
+plt.figure(figsize=(10,12))
+plt.subplot(121) ; plt.imshow(img[: , : ,::-1]); plt.title('Original Color Image')
+plt.subplot(122) ; plt.imshow(img_eq[: , : ,::-1]); plt.title('Equalized Image')
+plt.subplot(321) ; plt.hist(img.ravel(),256,range =[0,256]);plt.title('Original Image')
+plt.subplot(322) ; plt.hist(img_eq.ravel(),256,range =[0,256]);plt.title('Histogram Equalized Image')
+```
 ## Output:
-### Input Grayscale Image and Color Image
-![image](https://github.com/Subhikshaa13/Histogram-of-an-images/assets/118787344/86629b1c-c359-4414-85db-176cb2ea1564)
 
-![image](https://github.com/Subhikshaa13/Histogram-of-an-images/assets/118787344/d440cdc4-f83c-4d89-811c-ebe110fe311c)
+### Original Image:
 
+![download](https://github.com/user-attachments/assets/e81836f2-2211-4c24-8dfc-356aed85df26)
 
+### Histogram of Original Image:
 
-### Histogram of Grayscale Image and any channel of Color Image
-![image](https://github.com/Subhikshaa13/Histogram-of-an-images/assets/118787344/79f38839-b570-4350-b334-285fc156f3c6)
+![download](https://github.com/user-attachments/assets/f44d4151-7b91-47cc-abaf-12774e55ad25)
 
+### Histogram Equalization of Original Image:
 
+![download](https://github.com/user-attachments/assets/cb6c85ae-6e7e-4e82-8d1a-b08bf03d33c6)
 
-### Histogram Equalization of Grayscale Image.
-![image](https://github.com/Subhikshaa13/Histogram-of-an-images/assets/118787344/b910aab9-f008-42c9-a2f8-5158ea249b7f)
+## Original Gray Image :
 
+![download](https://github.com/user-attachments/assets/06032e40-0384-4830-9f3f-78a2cdd97357)
 
-![image](https://github.com/Subhikshaa13/Histogram-of-an-images/assets/118787344/4ac8aefb-d5ab-4de3-bb4c-240a581a22ef)
+## Histogram Equalized Image :
 
+![download](https://github.com/user-attachments/assets/bc1e9dc1-299d-495a-a401-7fa8360d70ac)
 
 ## Result: 
 Thus the histogram for finding the frequency of pixels in an image with pixel values ranging from 0 to 255 is obtained. Also,histogram equalization is done for the gray scale image using OpenCV.
